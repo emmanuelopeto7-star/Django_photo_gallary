@@ -1,15 +1,35 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ProfileForm, RegisterForm
-from .models import Photo, Profile
+from .models import Photo, Profile, Tag
 
 
 def home(request):
-    """Show every photo in the gallery, newest first."""
+    """Show every photo in the gallery, newest first.
+
+    If a ?tag=name query parameter is given, only show photos that
+    have that tag.
+    """
     photos = Photo.objects.all().order_by('-created_at')
-    return render(request, 'gallery/home.html', {'photos': photos})
+
+    selected_tag = request.GET.get('tag')
+    if selected_tag:
+        photos = photos.filter(tags__name=selected_tag)
+
+    context = {
+        'photos': photos,
+        'tags': Tag.objects.all(),
+        'selected_tag': selected_tag,
+    }
+    return render(request, 'gallery/home.html', context)
+
+
+def photo_detail(request, pk):
+    """Show one photo's title, description, and tags."""
+    photo = get_object_or_404(Photo, pk=pk)
+    return render(request, 'gallery/photo_detail.html', {'photo': photo})
 
 
 def register(request):

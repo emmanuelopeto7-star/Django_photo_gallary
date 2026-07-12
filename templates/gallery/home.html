@@ -5,10 +5,25 @@
 {% block content %}
     <h1 class="text-3xl font-bold mb-6">Welcome to the Photo Gallery</h1>
 
+    {% if tags %}
+        <div class="mb-6 flex flex-wrap gap-2">
+            <a href="{% url 'gallery_home' %}"
+               class="text-sm px-3 py-1 rounded {% if not selected_tag %}bg-slate-800 text-white{% else %}bg-gray-200 text-gray-700{% endif %}">
+                All
+            </a>
+            {% for tag in tags %}
+                <a href="{% url 'gallery_home' %}?tag={{ tag.name }}"
+                   class="text-sm px-3 py-1 rounded {% if selected_tag == tag.name %}bg-slate-800 text-white{% else %}bg-gray-200 text-gray-700{% endif %}">
+                    {{ tag.name }}
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     {% if photos %}
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {% for photo in photos %}
-                <div class="bg-white rounded shadow overflow-hidden">
+                <a href="{% url 'photo_detail' photo.pk %}" class="bg-white rounded shadow overflow-hidden block">
                     <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="w-full h-48 object-cover">
                     <div class="p-4">
                         <h2 class="font-semibold text-lg">{{ photo.title }}</h2>
@@ -18,10 +33,10 @@
                             {% endfor %}
                         </div>
                     </div>
-                </div>
+                </a>
             {% endfor %}
         </div>
     {% else %}
-        <p class="text-gray-600">No photos have been uploaded yet.</p>
+        <p class="text-gray-600">No photos found.</p>
     {% endif %}
 {% endblock %}
