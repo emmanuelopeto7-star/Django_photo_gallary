@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+
+# Django
+db.sqlite3
+media/
+staticfiles/
+
+# Environment variables (holds secret/local settings, never commit this)
+.env
+
+# Editor/OS files
+.vscode/
+.idea/
+.DS_Store
