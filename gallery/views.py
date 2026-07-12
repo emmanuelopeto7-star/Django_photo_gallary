@@ -32,6 +32,36 @@ def photo_detail(request, pk):
     return render(request, 'gallery/photo_detail.html', {'photo': photo})
 
 
+@login_required
+def like_photo(request, pk):
+    """Like a photo. Liking a photo you had disliked removes the dislike.
+    Liking a photo you already liked removes the like (un-like)."""
+    photo = get_object_or_404(Photo, pk=pk)
+    photo.disliked_by.remove(request.user)
+
+    if request.user in photo.liked_by.all():
+        photo.liked_by.remove(request.user)
+    else:
+        photo.liked_by.add(request.user)
+
+    return redirect('photo_detail', pk=pk)
+
+
+@login_required
+def dislike_photo(request, pk):
+    """Dislike a photo. Works the same way as like_photo, but the other
+    way around."""
+    photo = get_object_or_404(Photo, pk=pk)
+    photo.liked_by.remove(request.user)
+
+    if request.user in photo.disliked_by.all():
+        photo.disliked_by.remove(request.user)
+    else:
+        photo.disliked_by.add(request.user)
+
+    return redirect('photo_detail', pk=pk)
+
+
 def register(request):
     """Let a new user create an account, then log them straight in."""
     if request.method == 'POST':
