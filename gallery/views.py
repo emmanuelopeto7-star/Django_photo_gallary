@@ -3,12 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from .forms import ProfileForm, RegisterForm
-from .models import Profile
+from .models import Photo, Profile
 
 
 def home(request):
-    """Show the gallery homepage. The real photo list is added in a later stage."""
-    return render(request, 'gallery/home.html')
+    """Show every photo in the gallery, newest first."""
+    photos = Photo.objects.all().order_by('-created_at')
+    return render(request, 'gallery/home.html', {'photos': photos})
 
 
 def register(request):
