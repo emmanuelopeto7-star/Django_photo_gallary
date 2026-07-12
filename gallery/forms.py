@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
+from .models import Profile
+
 
 class RegisterForm(UserCreationForm):
     """Registration form. Adds a required, unique email to the built-in
@@ -33,3 +35,14 @@ class LoginForm(AuthenticationForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'border rounded px-3 py-2 w-full'
+
+
+class ProfileForm(forms.ModelForm):
+    """Lets a user update their bio and profile picture."""
+
+    class Meta:
+        model = Profile
+        fields = ['bio', 'profile_picture']
+        widgets = {
+            'bio': forms.Textarea(attrs={'class': 'border rounded px-3 py-2 w-full', 'rows': 4}),
+        }
