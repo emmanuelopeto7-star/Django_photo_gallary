@@ -140,7 +140,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Authentication
-# Where to send users after they log in / log out.
+# Where to send users who aren't logged in but try to view a page that
+# needs login (like the profile or upload pages), and where to send
+# users after they log in / log out.
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'gallery_home'
 LOGOUT_REDIRECT_URL = 'gallery_home'
 

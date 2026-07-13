@@ -3,7 +3,14 @@
 {% block title %}Home - Photo Gallery{% endblock %}
 
 {% block content %}
-    <h1 class="text-3xl font-bold mb-6">Welcome to the Photo Gallery</h1>
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-3xl font-bold">Welcome to the Photo Gallery</h1>
+        {% if user.is_authenticated %}
+            <a href="{% url 'upload_photo' %}" class="bg-slate-800 text-white px-4 py-2 rounded hover:bg-slate-700">
+                Upload a Photo
+            </a>
+        {% endif %}
+    </div>
 
     {% if tags %}
         <div class="mb-6 flex flex-wrap gap-2">

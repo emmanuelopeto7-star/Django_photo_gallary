@@ -19,6 +19,7 @@
         <div class="flex items-center gap-4">
             {% if user.is_authenticated %}
                 <span class="text-sm">Hi, {{ user.username }}</span>
+                <a href="{% url 'upload_photo' %}" class="hover:underline">Upload Photo</a>
                 <a href="{% url 'profile' %}" class="hover:underline">Profile</a>
                 <form action="{% url 'logout' %}" method="post" class="inline">
                     {% csrf_token %}

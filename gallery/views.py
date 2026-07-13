@@ -2,7 +2,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import ProfileForm, RegisterForm
+from .forms import PhotoForm, ProfileForm, RegisterForm
 from .models import Photo, Profile, Tag
 
 
@@ -30,6 +30,23 @@ def photo_detail(request, pk):
     """Show one photo's title, description, and tags."""
     photo = get_object_or_404(Photo, pk=pk)
     return render(request, 'gallery/photo_detail.html', {'photo': photo})
+
+
+@login_required
+def upload_photo(request):
+    """Let a logged-in user add a new photo to the gallery."""
+    if request.method == 'POST':
+        form = PhotoForm(request.POST, request.FILES)
+        if form.is_valid():
+            photo = form.save(commit=False)
+            photo.uploaded_by = request.user
+            photo.save()
+            form.save_m2m()
+            return redirect('photo_detail', pk=photo.pk)
+    else:
+        form = PhotoForm()
+
+    return render(request, 'gallery/upload_photo.html', {'form': form})
 
 
 @login_required

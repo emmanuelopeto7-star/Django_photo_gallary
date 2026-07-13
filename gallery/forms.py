@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Profile
+from .models import Photo, Profile
 
 
 class RegisterForm(UserCreationForm):
@@ -45,4 +45,18 @@ class ProfileForm(forms.ModelForm):
         fields = ['bio', 'profile_picture']
         widgets = {
             'bio': forms.Textarea(attrs={'class': 'border rounded px-3 py-2 w-full', 'rows': 4}),
+        }
+
+
+class PhotoForm(forms.ModelForm):
+    """Lets a logged-in user upload a new photo with a title, description,
+    image, and tags."""
+
+    class Meta:
+        model = Photo
+        fields = ['title', 'description', 'image', 'tags']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'border rounded px-3 py-2 w-full'}),
+            'description': forms.Textarea(attrs={'class': 'border rounded px-3 py-2 w-full', 'rows': 4}),
+            'tags': forms.CheckboxSelectMultiple(),
         }
