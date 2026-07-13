@@ -12,6 +12,8 @@ liking/disliking photos. Built for a school assignment.
 - PostgreSQL
 - HTML5 + Tailwind CSS (via CDN)
 - Pillow (for handling uploaded images)
+- Cloudinary (stores uploaded photos and profile pictures, so they
+  survive redeploys on hosts with an ephemeral filesystem, like Render)
 
 ## Running it locally
 
@@ -49,6 +51,16 @@ DB_PORT=5432
 It's loaded automatically and is already in `.gitignore`, so your
 password never gets committed.
 
+Photo uploads use Cloudinary. Create a free account at
+[cloudinary.com](https://cloudinary.com), then copy your Cloud Name,
+API Key, and API Secret from the dashboard into the same `.env` file:
+
+```
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+```
+
 Then run the app:
 
 ```bash
@@ -70,8 +82,9 @@ as the superuser and add tags.
    - Start command: `python manage.py migrate && gunicorn photogallery.wsgi`
      (add `gunicorn` to `requirements.txt` first)
 4. Add environment variables in the Render dashboard: `DB_NAME`,
-   `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`, a random
-   `SECRET_KEY`, `DEBUG=False`, and `ALLOWED_HOSTS` set to your Render
-   domain (e.g. `your-app-name.onrender.com`). `settings.py` already
-   reads all of these from the environment.
+   `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`, `CLOUDINARY_CLOUD_NAME`,
+   `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, a random `SECRET_KEY`,
+   `DEBUG=False`, and `ALLOWED_HOSTS` set to your Render domain (e.g.
+   `your-app-name.onrender.com`). `settings.py` already reads all of
+   these from the environment.
 5. Deploy, then paste the live URL at the top of this README.

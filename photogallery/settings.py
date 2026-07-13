@@ -49,7 +49,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
     'gallery',
 ]
 
@@ -146,7 +148,19 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Media files (user-uploaded photos)
-# https://docs.djangoproject.com/en/3.2/topics/files/
+#
+# Uploaded photos and profile pictures are stored on Cloudinary
+# instead of the local disk. This matters for deployment: hosts like
+# Render wipe their local filesystem on every redeploy, so files saved
+# to disk would disappear. Get free credentials by creating an account
+# at https://cloudinary.com, then add them to your .env file (see
+# README.md for the exact variable names).
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
