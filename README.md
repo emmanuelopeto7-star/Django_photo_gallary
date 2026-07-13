@@ -35,9 +35,19 @@ GRANT ALL PRIVILEGES ON DATABASE photogallery_db TO postgres;
 `photogallery/settings.py` reads the DB name/user/password/host/port
 from the environment variables `DB_NAME`, `DB_USER`, `DB_PASSWORD`,
 `DB_HOST`, `DB_PORT` (defaulting to `photogallery_db` / `postgres` /
-`postgres` / `localhost` / `5432`). Set these to match your own
-PostgreSQL setup, or edit the defaults directly in `settings.py`.
-Never commit your real password to git.
+`postgres` / `localhost` / `5432`). The easiest way to set these is to
+create a `.env` file in the project root:
+
+```
+DB_NAME=photogallery_db
+DB_USER=postgres
+DB_PASSWORD=your_postgres_password
+DB_HOST=localhost
+DB_PORT=5432
+```
+
+It's loaded automatically and is already in `.gitignore`, so your
+password never gets committed.
 
 Then run the app:
 
