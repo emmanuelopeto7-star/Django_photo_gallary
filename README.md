@@ -9,7 +9,10 @@ photos by tag, like/dislike photos, and manage their profile.
 
 ## Tech stack
 
-- Python 3 + Django 3.2
+- Python 3 + Django 4.2 (LTS). The project originally targeted Django 3.x,
+  but Django 3.2 depends on Python's `cgi` module, which was removed in
+  Python 3.13+. If your Python is 3.12 or older, Django 3.2 will also
+  work fine; on newer Python you need Django 4.2+.
 - PostgreSQL (database)
 - HTML5 + Tailwind CSS (loaded from the Tailwind CDN, the simplest way
   to use Tailwind in a beginner project)
