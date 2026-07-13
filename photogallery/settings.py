@@ -28,12 +28,17 @@ load_dotenv(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-aa#d@p+m+))2i*v4x2ngo^q_9_##4%#657f&a+o1)n(xfzos1('
+# Falls back to a default so the project still runs out of the box;
+# set your own SECRET_KEY in .env before deploying anywhere public.
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY', 'django-insecure-aa#d@p+m+))2i*v4x2ngo^q_9_##4%#657f&a+o1)n(xfzos1('
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+# Comma-separated list, e.g. "localhost,127.0.0.1,your-app.onrender.com"
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 
 # Application definition

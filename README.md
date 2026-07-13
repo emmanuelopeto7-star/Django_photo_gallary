@@ -69,8 +69,9 @@ as the superuser and add tags.
    - Build command: `pip install -r requirements.txt`
    - Start command: `python manage.py migrate && gunicorn photogallery.wsgi`
      (add `gunicorn` to `requirements.txt` first)
-4. Add environment variables for the database (`DB_NAME`, `DB_USER`,
-   `DB_PASSWORD`, `DB_HOST`, `DB_PORT`) and a `DJANGO_SECRET_KEY`,
-   then update `settings.py` to read `SECRET_KEY` and `ALLOWED_HOSTS`
-   from the environment before deploying.
+4. Add environment variables in the Render dashboard: `DB_NAME`,
+   `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`, a random
+   `SECRET_KEY`, `DEBUG=False`, and `ALLOWED_HOSTS` set to your Render
+   domain (e.g. `your-app-name.onrender.com`). `settings.py` already
+   reads all of these from the environment.
 5. Deploy, then paste the live URL at the top of this README.
