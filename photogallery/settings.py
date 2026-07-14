@@ -10,18 +10,17 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import os
 from pathlib import Path
 
-from dotenv import load_dotenv
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load variables from a .env file (if one exists) into the environment,
-# so settings below can read them with os.environ.get(). See .env for
-# this project's local database settings; it is never committed to git.
-load_dotenv(BASE_DIR / '.env')
+# decouple's config() reads from a .env file in the project root (if
+# one exists) and falls back to real environment variables otherwise.
+# See .env for this project's local settings; it is never committed
+# to git.
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,15 +29,15 @@ load_dotenv(BASE_DIR / '.env')
 # SECURITY WARNING: keep the secret key used in production secret!
 # Falls back to a default so the project still runs out of the box;
 # set your own SECRET_KEY in .env before deploying anywhere public.
-SECRET_KEY = os.environ.get(
-    'SECRET_KEY', 'django-insecure-aa#d@p+m+))2i*v4x2ngo^q_9_##4%#657f&a+o1)n(xfzos1('
+SECRET_KEY = config(
+    'SECRET_KEY', default='django-insecure-aa#d@p+m+))2i*v4x2ngo^q_9_##4%#657f&a+o1)n(xfzos1('
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 # Comma-separated list, e.g. "localhost,127.0.0.1,your-app.onrender.com"
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')
 
 
 # Application definition
@@ -100,11 +99,11 @@ WSGI_APPLICATION = 'photogallery.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'photogallery_db'),
-        'USER': os.environ.get('DB_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'postgres'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
+        'NAME': config('DB_NAME', default='photogallery_db'),
+        'USER': config('DB_USER', default='postgres'),
+        'PASSWORD': config('DB_PASSWORD', default='postgres'),
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default='5432'),
     }
 }
 
@@ -156,9 +155,9 @@ STATIC_URL = '/static/'
 # at https://cloudinary.com, then add them to your .env file (see
 # README.md for the exact variable names).
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME', default=''),
+    'API_KEY': config('CLOUDINARY_API_KEY', default=''),
+    'API_SECRET': config('CLOUDINARY_API_SECRET', default=''),
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
