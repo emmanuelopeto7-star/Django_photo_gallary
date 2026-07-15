@@ -89,23 +89,17 @@ WSGI_APPLICATION = 'photogallery.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-#
-# This project uses PostgreSQL. Before running the project, create a
-# database in PostgreSQL and then either:
-#   1. Edit the values below directly (NAME, USER, PASSWORD), or
-#   2. Set them as environment variables with the same names, e.g.
-#      DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT.
-# Using environment variables means you never have to commit your
-# real password to git.
+
+
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME', default='photogallery_db'),
-        'USER': config('DB_USER', default='postgres'),
-        'PASSWORD': config('DB_PASSWORD', default='postgres'),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default='5432'),
+        'ENGINE': config('DB_ENGINE'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
 
