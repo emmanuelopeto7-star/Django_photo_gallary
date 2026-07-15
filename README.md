@@ -11,7 +11,6 @@ liking/disliking photos. Built for a school assignment.
 - Python 3 + Django 4.2
 - PostgreSQL
 - HTML5 + Tailwind CSS (via CDN)
-- Pillow (for handling uploaded images)
 - Cloudinary (stores uploaded photos and profile pictures, so they
   survive redeploys on hosts with an ephemeral filesystem, like Render)
 
