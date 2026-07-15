@@ -8,6 +8,10 @@
     <form method="post" class="max-w-sm space-y-4">
         {% csrf_token %}
 
+        {% for error in form.non_field_errors %}
+            <p class="text-red-600 text-sm">{{ error }}</p>
+        {% endfor %}
+
         {% for field in form %}
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">{{ field.label }}</label>
