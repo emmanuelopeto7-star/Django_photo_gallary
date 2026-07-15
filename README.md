@@ -8,7 +8,7 @@ liking/disliking photos. Built for a school assignment.
 
 ## Tech stack
 
-- Python 3 + Django 4.2
+- Python 3 + Django 5.2
 - PostgreSQL
 - HTML5 + Tailwind CSS (via CDN)
 - Cloudinary (stores uploaded photos and profile pictures, so they
